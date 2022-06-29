@@ -1,48 +1,59 @@
 import React, {Component} from 'react';
-import { Media } from 'reactstrap';
+//import { Media } from 'reactstrap';
+import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle} from 'reactstrap';
+import DishDetail from './DishdetailComponent';
 
-class menu extends Component {
+class Menu extends Component {
 
     constructor(props) {
         super(props);
         
         this.state = {
-            
-        };
+            selectedDish: null
+        };  
     }
 
+
+    //When a card is clicked and "onDishSelect" is called,
+    //it takes the selected dish in props and using this.setState(), 
+    //it will insure that selectedDish equals that dish instead of null;   
+    onDishSelect(dish) {    
+        this.setState({ 
+            selectedDish: dish
+        });
+    }
+
+
+   
 
     render() {
 
         const menu = this.props.dishes.map((dish) => {
             return (
-                <div key={dish.id} className ="col-12 mt-5">
-                    <Media tag="li">
-                        <Media left middle>
-                            <Media object src={dish.image} alt={dish.name} />
-                        </Media>
-
-                        <Media body className="ml-5">
-                            <Media heading>{dish.name}</Media>
-                            <p>{dish.description}</p>
-                        </Media>
-                    </Media>
+                <div key={dish.id} className ="col-12 col-md-5 m-6">
+                    <Card onClick={() => this.onDishSelect(dish)}>
+                            <CardImg width="100%" src={dish.image} alt={dish.name} />
+                        <CardImgOverlay>
+                            <CardTitle>{dish.name}</CardTitle>
+                            
+                        </CardImgOverlay>
+                    </Card>
                 </div>
             );
         });
 
         return (
-            <div>
+            <div className='container'>
                 <div className="row">
-                    <Media list>
-                        {menu}
-                    </Media>
-
+                    {menu}
                 </div>
+
+                <DishDetail dish={this.state.selectedDish} />
+                
             </div>
         );
+
     }
 
 }
-console.log(menu);
-export default menu;
+export default Menu;
