@@ -8,7 +8,7 @@ class DishDetail extends Component {
         super(props);
 
         console.log(props);
-
+        
         this.state = {
             selectedDishDetail: this.props.dsdetail
         };
